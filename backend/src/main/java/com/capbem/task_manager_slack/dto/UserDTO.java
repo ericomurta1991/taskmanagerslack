@@ -1,6 +1,7 @@
 package com.capbem.task_manager_slack.dto;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 import com.capbem.task_manager_slack.entities.User;
 
@@ -8,8 +9,9 @@ public class UserDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private Long id;
-	private String nome;
+	private String name;
 	private String email;
+	private LocalDate birthday;
 	
 	
 	public UserDTO() {
@@ -17,16 +19,16 @@ public class UserDTO implements Serializable {
 	}
 
 
-	public UserDTO(Long id, String nome, String email) {
+	public UserDTO(Long id, String name, String email) {
 		super();
 		this.id = id;
-		this.nome = nome;
+		this.name = name;
 		this.email = email;
 	}
 	
 	public UserDTO(User entity) {
 		this.id = entity.getId();
-		this.nome = entity.getName();
+		this.name = entity.getName();
 		this.email = entity.getEmail();
 	}
 
@@ -41,13 +43,13 @@ public class UserDTO implements Serializable {
 	}
 
 
-	public String getNome() {
-		return nome;
+	public String getName() {
+		return name;
 	}
 
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 
@@ -58,6 +60,16 @@ public class UserDTO implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+
+	public LocalDate getBirthday() {
+		return birthday;
+	}
+
+
+	public void setBirthday(LocalDate birthday) {
+		this.birthday = birthday;
 	}
 	
 	

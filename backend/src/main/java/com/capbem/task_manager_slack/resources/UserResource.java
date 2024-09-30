@@ -2,6 +2,7 @@ package com.capbem.task_manager_slack.resources;
 
 import java.net.URI;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
@@ -23,6 +24,7 @@ import com.capbem.task_manager_slack.services.UserService;
 @RestController
 @RequestMapping(value = "/users")
 public class UserResource {
+	@Autowired
 	private UserService service;
 
 	@GetMapping
