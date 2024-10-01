@@ -3,6 +3,7 @@ package com.capbem.task_manager_slack.services;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.capbem.task_manager_slack.dto.UserDTO;
 import com.capbem.task_manager_slack.entities.User;
 import com.capbem.task_manager_slack.repositories.UserRepository;
+import com.capbem.task_manager_slack.services.exceptions.DatabaseException;
+import com.capbem.task_manager_slack.services.exceptions.ResourceNotFoundException;
 
 import jakarta.persistence.EntityNotFoundException;
 
@@ -57,7 +60,7 @@ public class UserService {
 			
 			return new UserDTO(entity);
 		}catch(EntityNotFoundException e) {
-			throw new EntityNotFoundException("Id not Found " + id);
+			throw new ResourceNotFoundException("Id not Found " + id);
 		}
 		
 	}
@@ -67,7 +70,9 @@ public class UserService {
 		try {
 			repository.deleteById(id);
 		}catch(EmptyResultDataAccessException e) {
-			throw new EmptyResultDataAccessException(null, 0);
+			throw new ResourceNotFoundException("Id not Found " + id);
+		}catch (DataIntegrityViolationException e){
+			throw new DatabaseException("Integrity violation");
 		}
 		
 	}
