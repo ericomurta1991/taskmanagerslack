@@ -76,7 +76,17 @@ public class TaskDTO implements Serializable{
 
 	public Instant getCreatedAt() {
 		return createdAt;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}	
+	
+	
 	
 	
 }
