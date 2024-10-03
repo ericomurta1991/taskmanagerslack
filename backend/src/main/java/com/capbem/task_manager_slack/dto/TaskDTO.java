@@ -1,12 +1,15 @@
 package com.capbem.task_manager_slack.dto;
 
 import java.io.Serializable;
-import java.time.Instant;
 import java.time.LocalDate;
 
+
 import com.capbem.task_manager_slack.entities.Task;
+import com.capbem.task_manager_slack.entities.Task.TaskPriority;
+import com.capbem.task_manager_slack.entities.Task.TaskStatus;
 //import com.capbem.task_manager_slack.entities.User;
 import com.capbem.task_manager_slack.entities.User;
+
 
 
 
@@ -16,7 +19,8 @@ public class TaskDTO implements Serializable{
 	private Long id;
 	private String title;
 	private String description;
-	private Instant startDate;
+	
+	private LocalDate startDate;
 	private LocalDate dueDate;
 	
 	private User user;
@@ -24,20 +28,21 @@ public class TaskDTO implements Serializable{
 	private TaskStatus status;
 	private TaskPriority priority;
 	
+	/*
 	public enum TaskStatus {
 		PENDING, COMPLETED, IN_PROGRESS
 	}
 	public enum TaskPriority {
 		LOW, MEDIUM, HIGH
 	}
-	
+	*/
 	
 
 	public TaskDTO() {
 		super();
 	}
 
-	public TaskDTO(Long id, String title, String description, Instant startDate, LocalDate dueDate, User user, TaskStatus status, TaskPriority priority) {
+	public TaskDTO(Long id, String title, String description, LocalDate startDate, LocalDate dueDate, User user, TaskStatus status, TaskPriority priority) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -55,6 +60,8 @@ public class TaskDTO implements Serializable{
 		this.description = entity.getDescription();
 		this.startDate = entity.getStartDate();
 		this.dueDate = entity.getDueDate();
+		this.status = entity.getStatus();
+		this.priority = entity.getPriority();
 		//this.user = entity.getUser();
 		
 	}
@@ -84,11 +91,11 @@ public class TaskDTO implements Serializable{
 	}
 
 	
-	public Instant getStartDate() {
+	public LocalDate getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(Instant startDate) {
+	public void setStartDate(LocalDate startDate) {
 		this.startDate = startDate;
 	}
 

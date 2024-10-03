@@ -81,25 +81,57 @@ public class UserService {
 	
 	
 	private void copyDtoToEntity(UserDTO dto, User entity) {
-	
+
 		entity.setName(dto.getName());
 		entity.setEmail(dto.getEmail());
 		entity.setBirthday(dto.getBirthday());
-		
+
 		entity.getTasks().clear();
 		for(TaskDTO taskdto : dto.getTasks()) {
 			//Task task = taskRepository.getReferenceById(taskdto.getId());
-	        Task task = new Task();
-	        task.setTitle(taskdto.getTitle());
-	        task.setDescription(taskdto.getDescription());
-	        task.setDueDate(taskdto.getDueDate());
+		    Task task = new Task();
+		    
+		    task.setTitle(taskdto.getTitle());
+		    task.setDescription(taskdto.getDescription());
+		    task.setDueDate(taskdto.getDueDate());
+		    task.setStartDate(taskdto.getStartDate());
+		    task.setStatus(taskdto.getStatus());
+		    
+		    task.setStatus(taskdto.getStatus());
+		    task.setPriority(taskdto.getPriority());
 			task.setUser(entity);
 			
-	
+
 			entity.getTasks().add(task);
 			
+			
 		}
-	}	
-
+		}
 	
 }
+
+
+/*private void copyDtoToEntity(UserDTO dto, User entity) {
+
+entity.setName(dto.getName());
+entity.setEmail(dto.getEmail());
+entity.setBirthday(dto.getBirthday());
+
+entity.getTasks().clear();
+for(TaskDTO taskdto : dto.getTasks()) {
+	//Task task = taskRepository.getReferenceById(taskdto.getId());
+    Task task = new Task();
+    task.setTitle(taskdto.getTitle());
+    task.setDescription(taskdto.getDescription());
+    task.setDueDate(taskdto.getDueDate());
+    
+    task.setStatus(taskdto.getStatus());
+    task.setPriority(taskdto.getPriority());
+	task.setUser(entity);
+	
+
+	entity.getTasks().add(task);
+	
+}
+}
+*/	

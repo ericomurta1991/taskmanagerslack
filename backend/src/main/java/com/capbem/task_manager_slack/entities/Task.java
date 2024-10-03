@@ -1,7 +1,7 @@
 package com.capbem.task_manager_slack.entities;
 
 import java.io.Serializable;
-import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -28,13 +28,13 @@ public class Task implements Serializable{
 	private Long id;
 	private String title;
 	private String description;
-	private Instant startDate;
+	private LocalDate startDate;
 	private LocalDate dueDate;
 	
 	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
-	private Instant createdAt;
+	private LocalDate createdAt;
 	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
-	private Instant updatedAt;
+	private LocalDate updatedAt;
 	
 	
 	@JsonIgnore
@@ -60,7 +60,7 @@ public class Task implements Serializable{
 		super();
 	}
 
-	public Task(Long id, String title, String description, Instant startdate, LocalDate dueDate, Instant createdAt, Instant updatedAt,
+	public Task(Long id, String title, String description, LocalDate startdate, LocalDate dueDate, LocalDate createdAt, LocalDate updatedAt,
 			User user, TaskStatus status, TaskPriority priority) {
 		super();
 		this.id = id;
@@ -100,11 +100,11 @@ public class Task implements Serializable{
 	}
 
 
-	public Instant getStartDate() {
+	public LocalDate getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(Instant startDate) {
+	public void setStartDate(LocalDate startDate) {
 		this.startDate = startDate;
 	}
 
@@ -117,22 +117,22 @@ public class Task implements Serializable{
 	}
 	
 
-	public Instant getCreatedAt() {
+	public LocalDate getCreatedAt() {
 		return createdAt;
 	}
 	
-	public Instant getUpdatedAt() {
+	public LocalDate getUpdatedAt() {
 		return updatedAt;
 	}
 
 	@PrePersist
 	public void prePersist() {
-		this.createdAt = Instant.now();
+		this.createdAt = LocalDate.now();
 	}
 	
 	@PreUpdate
 	public void preUpdated() {
-		this.updatedAt = Instant.now();
+		this.updatedAt = LocalDate.now();
 	}
 	
 	public User getUser() {
