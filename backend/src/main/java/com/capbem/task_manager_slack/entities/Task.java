@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -26,6 +28,7 @@ public class Task implements Serializable{
 	private Long id;
 	private String title;
 	private String description;
+	private Instant startDate;
 	private LocalDate dueDate;
 	
 	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
@@ -33,9 +36,12 @@ public class Task implements Serializable{
 	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
 	private Instant updatedAt;
 	
+	
+	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name = "user_id", nullable = false)
+	@JoinColumn(name = "user_id")
 	private User user;
+	
 	
 	@Enumerated(EnumType.STRING)
 	private TaskStatus status;
@@ -54,12 +60,13 @@ public class Task implements Serializable{
 		super();
 	}
 
-	public Task(Long id, String title, String description, LocalDate dueDate, Instant createdAt, Instant updatedAt,
+	public Task(Long id, String title, String description, Instant startdate, LocalDate dueDate, Instant createdAt, Instant updatedAt,
 			User user, TaskStatus status, TaskPriority priority) {
 		super();
 		this.id = id;
 		this.title = title;
 		this.description = description;
+		this.startDate = startdate;
 		this.dueDate = dueDate;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
@@ -92,6 +99,15 @@ public class Task implements Serializable{
 		this.description = description;
 	}
 
+
+	public Instant getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(Instant startDate) {
+		this.startDate = startDate;
+	}
+
 	public LocalDate getDueDate() {
 		return dueDate;
 	}
@@ -108,7 +124,7 @@ public class Task implements Serializable{
 	public Instant getUpdatedAt() {
 		return updatedAt;
 	}
-	
+
 	@PrePersist
 	public void prePersist() {
 		this.createdAt = Instant.now();
@@ -118,15 +134,15 @@ public class Task implements Serializable{
 	public void preUpdated() {
 		this.updatedAt = Instant.now();
 	}
-
+	
 	public User getUser() {
 		return user;
 	}
-
+	
 	public void setUser(User user) {
 		this.user = user;
 	}
-
+	
 	public TaskStatus getStatus() {
 		return status;
 	}

@@ -10,8 +10,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.capbem.task_manager_slack.dto.TaskDTO;
 import com.capbem.task_manager_slack.dto.UserDTO;
+import com.capbem.task_manager_slack.entities.Task;
 import com.capbem.task_manager_slack.entities.User;
+import com.capbem.task_manager_slack.repositories.TaskRepository;
 import com.capbem.task_manager_slack.repositories.UserRepository;
 import com.capbem.task_manager_slack.services.exceptions.DatabaseException;
 import com.capbem.task_manager_slack.services.exceptions.ResourceNotFoundException;
@@ -23,6 +26,8 @@ public class UserService {
 	
 	@Autowired
 	private UserRepository repository;
+	@Autowired
+	private TaskRepository taskRepository;
 	
 	@Transactional(readOnly = true)
 	public Page<UserDTO> findAllPaged(PageRequest pageRequest) {
@@ -34,30 +39,27 @@ public class UserService {
 	@Transactional(readOnly = true)
 	public UserDTO findById(Long id) {
 		Optional<User> obj = repository.findById(id);
-		User entity = obj.get();
-		
-		return new UserDTO(entity);
+		User entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entity Not Found"));
+		//return new UserDTO(entity);
+	
+		return new UserDTO(entity, entity.getTasks());
 	}
 	
 	@Transactional
 	public UserDTO insert(UserDTO userDto) {
 		User entity = new User();
-		entity.setName(userDto.getName());
-		entity.setEmail(userDto.getEmail());
-		entity.setBirthday(userDto.getBirthday());
+		copyDtoToEntity(userDto, entity);
 		entity = repository.save(entity);
-	
 		return new UserDTO(entity);
+		
 	}
 	
 	@Transactional
 	public UserDTO update(Long id, UserDTO userDto) {
 		try {
 			User entity = repository.getReferenceById(id);
-			entity.setName(userDto.getName());
-			entity.setEmail(userDto.getEmail());
-			entity.setBirthday(userDto.getBirthday());
-			
+			copyDtoToEntity(userDto, entity);
+			entity = repository.save(entity);
 			return new UserDTO(entity);
 		}catch(EntityNotFoundException e) {
 			throw new ResourceNotFoundException("Id not Found " + id);
@@ -76,6 +78,28 @@ public class UserService {
 		}
 		
 	}
+	
+	
+	private void copyDtoToEntity(UserDTO dto, User entity) {
+	
+		entity.setName(dto.getName());
+		entity.setEmail(dto.getEmail());
+		entity.setBirthday(dto.getBirthday());
+		
+		entity.getTasks().clear();
+		for(TaskDTO taskdto : dto.getTasks()) {
+			//Task task = taskRepository.getReferenceById(taskdto.getId());
+	        Task task = new Task();
+	        task.setTitle(taskdto.getTitle());
+	        task.setDescription(taskdto.getDescription());
+	        task.setDueDate(taskdto.getDueDate());
+			task.setUser(entity);
+			
+	
+			entity.getTasks().add(task);
+			
+		}
+	}	
 
 	
 }

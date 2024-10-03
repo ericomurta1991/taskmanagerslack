@@ -2,7 +2,11 @@ package com.capbem.task_manager_slack.dto;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
+import com.capbem.task_manager_slack.entities.Task;
 import com.capbem.task_manager_slack.entities.User;
 
 public class UserDTO implements Serializable {
@@ -12,6 +16,9 @@ public class UserDTO implements Serializable {
 	private String name;
 	private String email;
 	private LocalDate birthday;
+	
+	
+	private List<TaskDTO> tasks = new ArrayList<>();
 	
 	
 	public UserDTO() {
@@ -34,7 +41,12 @@ public class UserDTO implements Serializable {
 		this.birthday = entity.getBirthday();
 		
 	}
-
+	
+	public UserDTO(User entity, Set<Task> tasks ) {
+		 this(entity);
+		 tasks.forEach(task -> this.tasks.add(new TaskDTO(task)));
+		 
+	}
 
 	public Long getId() {
 		return id;
@@ -73,6 +85,16 @@ public class UserDTO implements Serializable {
 
 	public void setBirthday(LocalDate birthday) {
 		this.birthday = birthday;
+	}
+
+
+	public List<TaskDTO> getTasks() {
+		return tasks;
+	}
+
+
+	public void setTasks(List<TaskDTO> tasks) {
+		this.tasks = tasks;
 	}
 	
 	

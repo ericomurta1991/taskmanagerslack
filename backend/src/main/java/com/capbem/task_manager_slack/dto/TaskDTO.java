@@ -5,7 +5,10 @@ import java.time.Instant;
 import java.time.LocalDate;
 
 import com.capbem.task_manager_slack.entities.Task;
+//import com.capbem.task_manager_slack.entities.User;
 import com.capbem.task_manager_slack.entities.User;
+
+
 
 public class TaskDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -13,32 +16,46 @@ public class TaskDTO implements Serializable{
 	private Long id;
 	private String title;
 	private String description;
+	private Instant startDate;
 	private LocalDate dueDate;
-	private Instant createdAt;
 	
 	private User user;
+	
+	private TaskStatus status;
+	private TaskPriority priority;
+	
+	public enum TaskStatus {
+		PENDING, COMPLETED, IN_PROGRESS
+	}
+	public enum TaskPriority {
+		LOW, MEDIUM, HIGH
+	}
+	
+	
 
 	public TaskDTO() {
 		super();
 	}
 
-	public TaskDTO(Long id, String title, String description, LocalDate dueDate, Instant createdAt, User user) {
+	public TaskDTO(Long id, String title, String description, Instant startDate, LocalDate dueDate, User user, TaskStatus status, TaskPriority priority) {
 		super();
 		this.id = id;
 		this.title = title;
 		this.description = description;
+		this.startDate = startDate;
 		this.dueDate = dueDate;
-		this.createdAt = createdAt;
 		this.user = user;
+		this.status = status;
+		this.priority = priority;
 	}
 	
 	public TaskDTO(Task entity) {
 		this.id = entity.getId();
 		this.title = entity.getTitle();
 		this.description = entity.getDescription();
+		this.startDate = entity.getStartDate();
 		this.dueDate = entity.getDueDate();
-		this.createdAt = entity.getCreatedAt();
-		this.user = entity.getUser();
+		//this.user = entity.getUser();
 		
 	}
 
@@ -66,6 +83,15 @@ public class TaskDTO implements Serializable{
 		this.description = description;
 	}
 
+	
+	public Instant getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(Instant startDate) {
+		this.startDate = startDate;
+	}
+
 	public LocalDate getDueDate() {
 		return dueDate;
 	}
@@ -73,18 +99,32 @@ public class TaskDTO implements Serializable{
 	public void setDueDate(LocalDate dueDate) {
 		this.dueDate = dueDate;
 	}
-
-	public Instant getCreatedAt() {
-		return createdAt;
-	}
-
+	/*
 	public User getUser() {
 		return user;
 	}
 
 	public void setUser(User user) {
 		this.user = user;
-	}	
+	}
+	*/
+	public TaskStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(TaskStatus status) {
+		this.status = status;
+	}
+
+	public TaskPriority getPriority() {
+		return priority;
+	}
+
+	public void setPriority(TaskPriority priority) {
+		this.priority = priority;
+	}
+
+
 	
 	
 	
