@@ -66,3 +66,52 @@ Each user can have multiple tasks, and each task contains fields like startDate,
       }
     ]
   }
+
+
+3) --> 
+{
+    "name": "John Doe",
+    "email": "john.doe@example.com",
+    "birthday": "1990-05-15",
+    "tasks": [
+        {
+            "title": "Team meeting",
+            "description": "Attend the team meeting on Zoom.",
+            "dueDate": "2024-10-05",
+            "startDate": "2024-10-02"
+        },
+        {
+            "title": "Complete project report",
+            "description": "Finish the annual project report.",
+            "dueDate": "2024-10-10",
+            "startDate": "2024-09-01"
+        }
+    ]
+}
+
+
+4) -->
+
+{
+  "name": "Jane Doe",
+  "email": "jane.doe@example.com",
+  "birthday": "1992-03-10",
+  "tasks": [
+    {
+      "title": "Submit project proposal",
+      "description": "Finalize and submit the project proposal by the end of the week.",
+      "startDate": "2024-10-01T10:30:00Z",
+      "dueDate": "2024-10-07",
+      "status": "IN_PROGRESS",
+      "priority": "HIGH"
+    },
+    {
+      "title": "Review team performance",
+      "description": "Conduct quarterly performance reviews with the team.",
+      "startDate": "2024-09-30T08:00:00Z",
+      "dueDate": "2024-10-05",
+      "status": "PENDING",
+      "priority": "MEDIUM"
+    }
+  ]
+}
